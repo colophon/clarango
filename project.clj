@@ -13,4 +13,5 @@
            :exclude [clarango.core-utility
                      clarango.http-utility
                      clarango.uri-utility]}
+  :main clarango.main
  )
