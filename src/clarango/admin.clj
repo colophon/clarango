@@ -11,20 +11,27 @@
   with the 200 indicating that the module cache was flushed successfully."
   (http/post-uri [:body] (connect-url-parts (get-safe-connection-url) "_admin/modules/flush")))
 
-; (http/post-uri [:body] (build-resource-uri "database" nil nil "_system")
-; {:name database-name :users users}))
+(defn reload []
+  "Realods the routing information from the collection routing.
+  No Arguments can be passed.
+  This REST call should return '{error false, code 200}'
+  with the 200 indicating that the routing information was reloaded successfully."
+  (http/post-uri [:body] (connect-url-parts (get-safe-connection-url) "_admin/modules/reload")))
 
-; https://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemLog
-; GET /_api/log -> reads logging for a specific level
+(defn statistics []
+ "Returns a huge Json doc with statistics information.
+ Please look up http://www.arangodb.org/manuals/current/HttpSystem#HttpSystemAdminStatistics"
+ (http/post-uri [:body] (connect-url-parts (get-safe-connection-url) "_admin/statistics")))
 
-; https://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemRoutingReloads
-; POST /_admin/routing/reload -> Reloads the routing information from the collection routing.
+(defn stat-desc []
+ "Returns a description of the statistics returned by /_admin/statistics. The returned objects contains a list of statistics groups in the attribute groups and a list of statistics figures in the attribute figures. For a detailed description please refer to 
+http://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemAdminStatisticsDescription"
+  (http/post-uri [:body] (connect-url-parts
+                           (get-safe-connection-url)
+                           "_admin/statistics-description")) )
 
-; https://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemAdminStatistics
-; GET /_admin/statistics -> read statistics as page fault, resident size, clientConnections, etc.
+(defn role [] ; GET, unknown path
+ "Description")
 
-; https://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemAdminStatisticsDescription
-; GET /_admin/statistics-description
-
-; https://www.arangodb.org/manuals/current/HttpSystem.html#HttpSystemAdminServerRole
-; GET /_admin/server/role PRIMARY, SECONDARY, COORDINATOR, UNKNOWN
+(defn log [params] ; GET, unknown path
+  "Description")
